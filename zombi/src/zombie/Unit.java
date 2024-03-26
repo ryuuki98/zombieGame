@@ -13,4 +13,14 @@ abstract class Unit{
 		MAX_HP = hp;
 	}
 	
+	public void attack() {
+		
+	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return String.format("%s [%d/%d]",this.name , this.hp,this.MAX_HP);
+	}
+	
 }
