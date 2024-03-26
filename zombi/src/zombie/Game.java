@@ -4,6 +4,8 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Game {
+	private final int ATTACK_MONSTER = 1;
+	private final int USE_ITEM = 2;
 	private final int PLAYER_STATUS = 1;
 	private final int PLAYER_MOVE = 2;
 	private static Game instance = new Game();
@@ -36,9 +38,10 @@ public class Game {
 		} else if (select == PLAYER_MOVE) {
 			movePlayer();
 			if (player.getLocation() % 5 == 0) {
-				battle();
-			}else {
-				occurredEvent();				
+				Monster monster = new Monster();
+				battle(monster);
+			} else {
+				occurredEvent();
 			}
 		}
 	}
@@ -59,15 +62,45 @@ public class Game {
 	}
 
 	private void badEvent() {
-System.out.println("나쁜 이벤트");
+		System.out.println("나쁜 이벤트");
 	}
 
 	private void goodEvent() {
 		System.out.println("좋은 이벤트");
 	}
 
-	private void battle() {
-		System.out.println("배틀하게 되었다");
+	private void battle(Monster monster) {
+		System.out.println("야생의 적 " + monster.getName() + "이 나타났다 ! ");
+		while (!(monster.isDead()) || !(player.isDead())) {
+			System.out.println(monster);
+			printBattleMenu();
+			int select = inputNumber("menu");
+			runBattleMenu(select);
+		}
+
+	}
+
+	private void runBattleMenu(int select) {
+		if (select == ATTACK_MONSTER) {
+			attack();
+		} else if (select == USE_ITEM) {
+			useItem();
+		}
+	}
+
+	private void useItem() {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void attack() {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void printBattleMenu() {
+		System.out.println("[1]공격");
+		System.out.println("[2]아이템 사용");
 	}
 
 	private void movePlayer() {
