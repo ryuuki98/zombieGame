@@ -2,7 +2,7 @@ package zombie;
 
 import java.util.Random;
 
-public class Player extends Unit {
+public class Player extends Unit implements Damageable {
 	private int location;
 	private int potionCount;
 	public Player() {

@@ -28,6 +28,10 @@ public class Game {
 	}
 
 	private boolean isRun() {
+		if (player.isDead()) {
+			System.out.println("플레이어가 사망하여 게임이 종료됩니다.");
+			return false;
+		}
 
 		return player.getLocation() < 100;
 	}
@@ -37,7 +41,7 @@ public class Game {
 			printPlayerStatus();
 		} else if (select == PLAYER_MOVE) {
 			movePlayer();
-			if (player.getLocation() % 5 == 0) {
+			if (player.getLocation() % 3 == 0) {
 				Monster monster = new Monster();
 				battle(monster);
 			} else {
@@ -71,18 +75,21 @@ public class Game {
 
 	private void battle(Monster monster) {
 		System.out.println("야생의 적 " + monster.getName() + "이 나타났다 ! ");
-		while (!(monster.isDead()) || !(player.isDead())) {
+		while (!monster.isDead() && !player.isDead()) {
+			System.out.println("==================");		
+			System.out.println(player);
 			System.out.println(monster);
+			System.out.println("==================");
 			printBattleMenu();
 			int select = inputNumber("menu");
-			runBattleMenu(select);
+			runBattleMenu(select,monster);
 		}
 
 	}
 
-	private void runBattleMenu(int select) {
+	private void runBattleMenu(int select, Monster monster) {
 		if (select == ATTACK_MONSTER) {
-			attack();
+			attack(monster);
 		} else if (select == USE_ITEM) {
 			useItem();
 		}
@@ -93,9 +100,11 @@ public class Game {
 
 	}
 
-	private void attack() {
-		// TODO Auto-generated method stub
-
+	private void attack(Monster monster) {
+		player.attack(monster);
+		if (!monster.isDead()) {
+			monster.attack(player);
+		}
 	}
 
 	private void printBattleMenu() {
