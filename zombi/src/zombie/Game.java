@@ -4,6 +4,8 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Game {
+	private final int END_FLOOR = 50;
+	
 	private final int ATTACK_MONSTER = 1;
 	private final int USE_ITEM = 2;
 	private final int PLAYER_STATUS = 1;
@@ -25,6 +27,14 @@ public class Game {
 			int select = inputNumber("menu");
 			runMeun(select);
 		}
+		printResult();
+	}
+
+	private void printResult() {
+		if (!player.isDead()) {
+			printPlayerLocation();
+			System.out.println("클리어 했습니다 ~ ");
+		}
 	}
 
 	private boolean isRun() {
@@ -33,7 +43,7 @@ public class Game {
 			return false;
 		}
 
-		return player.getLocation() < 100;
+		return player.getLocation() < END_FLOOR-1;
 	}
 
 	private void runMeun(int select) {
@@ -84,6 +94,11 @@ public class Game {
 			int select = inputNumber("menu");
 			runBattleMenu(select,monster);
 		}
+		if (monster.dropPotion()) {
+			player.setPotionCountPlus();
+			System.out.println("몬스터가 포션을 드랍했어요 !");
+			
+		}
 
 	}
 
@@ -96,8 +111,15 @@ public class Game {
 	}
 
 	private void useItem() {
-		// TODO Auto-generated method stub
-
+		if (player.getPotionCount() == 0) {
+			System.out.println("현재 가진 포션이 없습니다.");
+			return;
+		}
+		System.out.println("현재 포션 갯수 : " + player.getPotionCount());
+		int option = inputNumber("포션을 사용하시겠습니까 ? y : 1 n : 0");
+		if (option == 1) {
+			player.usePotion();
+		}
 	}
 
 	private void attack(Monster monster) {
@@ -137,8 +159,22 @@ public class Game {
 	}
 
 	private void printMenu() {
-		System.out.println("플레이어 현재 위치 : " + player.getLocation());
+		printPlayerLocation();
 		System.out.println("[1]플레이어 상태 확인");
 		System.out.println("[2]이동");
+	}
+
+	private void printPlayerLocation() {
+		for (int i =0; i <END_FLOOR; i++) {
+			if (i == player.getLocation()) {
+				System.out.print("⎝ᑒ⎠");
+			}else if (i == END_FLOOR-1) {
+				System.out.print("|GOAL|");
+			}
+			else {
+				System.out.print("_ ");
+			}
+		}
+		System.out.println();
 	}
 }

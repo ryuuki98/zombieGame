@@ -47,6 +47,7 @@ abstract class Unit{
 	}
 	
 	
+	
 	public void attack(Damageable unit) {
 		Unit target = (Unit) unit;
 		int hp = target.getHp() - this.power * 5;
