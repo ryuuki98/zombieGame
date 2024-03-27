@@ -31,6 +31,7 @@
 
 
 > Class Diagram(UML)
-> ![diagram](https://github.com/ryuuki98/zombieGame/blob/master/zombi/images/Unit.jpg)
+
+![diagram](https://github.com/ryuuki98/zombieGame/blob/master/zombi/images/Unit.jpg)
 
 > Demo ![Demo]()
