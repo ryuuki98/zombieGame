@@ -2,7 +2,8 @@ package zombie;
 
 import java.util.Random;
 
-public class Monster extends Unit {
+public abstract class Monster extends Unit {
+	private Player player = Game.getPlayer();
 
 	public Monster(String name, int hp, int power) {
 		super(name, hp, power);
@@ -20,7 +21,9 @@ public class Monster extends Unit {
 		int hp = target.getHp() - super.getPower() * 5;
 		System.out.printf("%s는 %d의 데미지를 입혔다\n",super.getName(),super.getPower() * 5);
 		target.setHp(hp);
-		
+		skill(player);
 	}
+	
+	abstract public void skill(Player player);
 
 }

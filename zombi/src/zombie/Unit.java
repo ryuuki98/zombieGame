@@ -42,8 +42,6 @@ abstract class Unit{
 	}
 	
 	
-	
-	
 	abstract public void attack(Damageable unit);
 	
 	@Override
