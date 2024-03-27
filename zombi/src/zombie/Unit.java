@@ -25,6 +25,11 @@ abstract class Unit{
 	}
 	public void setHp(int hp) {
 		this.hp = hp;
+		if (this.hp<=0) {
+			this.hp = 0;
+			this.isDead = true;
+			System.out.println(this.name + " 사망");
+		}
 	}
 	public int getPower() {
 		return power;
@@ -48,16 +53,7 @@ abstract class Unit{
 	
 	
 	
-	public void attack(Damageable unit) {
-		Unit target = (Unit) unit;
-		int hp = target.getHp() - this.power * 5;
-		target.setHp(hp);
-		System.out.printf("%s는 %d의 데미지를 입혔다\n",this.name,this.power * 5);
-		if (target.getHp() <= 0) {
-			target.isDead = true;
-			System.out.println(target.getName() + "은 쓰러졌다 ! ");
-		}
-	}
+	abstract public void attack(Damageable unit);
 	
 	@Override
 	public String toString() {

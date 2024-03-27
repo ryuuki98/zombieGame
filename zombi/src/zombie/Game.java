@@ -4,24 +4,32 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Game {
-	private final int END_FLOOR = 50;
-	
+	private final int END_FLOOR = 30;
+
+	private EventManager eventManager;
+
 	private final int ATTACK_MONSTER = 1;
 	private final int USE_ITEM = 2;
 	private final int PLAYER_STATUS = 1;
 	private final int PLAYER_MOVE = 2;
 	private static Game instance = new Game();
-	private Player player;
+	private static Player player;
 
 	private Game() {
 		player = new Player();
+		eventManager = new EventManager();
 	}
 
 	public static Game getInstance() {
 		return instance;
 	}
 
+	public static Player getPlayer() {
+		return player;
+	}
+
 	public void run() {
+		printScript();
 		while (isRun()) {
 			printMenu();
 			int select = inputNumber("menu");
@@ -30,10 +38,31 @@ public class Game {
 		printResult();
 	}
 
+	private void printScript() {
+		System.out.println("탑을 오르는 자여 ..");
+		try {
+			Thread.sleep(2000);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		System.out.println("그대의 여정에 축복이 있기를...");
+		try {
+			Thread.sleep(2000);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		System.out.println("빌지 않겠다 ! ");
+		try {
+			Thread.sleep(2000);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+
 	private void printResult() {
 		if (!player.isDead()) {
 			printPlayerLocation();
-			System.out.println("클리어 했습니다 ~ ");
+			System.out.println("마침내 탑에 올랐다.");
 		}
 	}
 
@@ -43,7 +72,7 @@ public class Game {
 			return false;
 		}
 
-		return player.getLocation() < END_FLOOR-1;
+		return player.getLocation() < END_FLOOR - 1;
 	}
 
 	private void runMeun(int select) {
@@ -52,52 +81,65 @@ public class Game {
 		} else if (select == PLAYER_MOVE) {
 			movePlayer();
 			if (player.getLocation() % 3 == 0) {
-				Monster monster = new Monster();
+				Monster monster = makeNewMonster();
 				battle(monster);
 			} else {
 				occurredEvent();
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 	}
 
+	private Monster makeNewMonster() {
+	    int ranNum = new Random().nextInt(3);
+	    Monster monster = null;
+
+	    switch (ranNum) {
+	        case 0:
+	            monster = new Mob1(); // Instantiate mob1
+	            break;
+	        case 1:
+	            monster = new Mob2(); // Instantiate mob2
+	            break;
+	        case 2:
+	            monster = new Mob3(); // Instantiate mob3
+	            break;
+	        default:
+	            break;
+	    }
+	    return monster;
+	}
+
+
 	private void occurredEvent() {
-		int ranNumber = new Random().nextInt(3) + 1;
+		int ranNumber = new Random().nextInt(2) + 1;
 		if (ranNumber == 1) {
-			goodEvent();
+			eventManager.goodEvent();
 		} else if (ranNumber == 2) {
-			badEvent();
-		} else if (ranNumber == 3) {
-			randomEvent();
+			eventManager.badEvent();
 		}
-	}
-
-	private void randomEvent() {
-		System.out.println("랜덤이벤트");
-	}
-
-	private void badEvent() {
-		System.out.println("나쁜 이벤트");
-	}
-
-	private void goodEvent() {
-		System.out.println("좋은 이벤트");
 	}
 
 	private void battle(Monster monster) {
 		System.out.println("야생의 적 " + monster.getName() + "이 나타났다 ! ");
 		while (!monster.isDead() && !player.isDead()) {
-			System.out.println("==================");		
+			System.out.println("==================");
 			System.out.println(player);
 			System.out.println(monster);
 			System.out.println("==================");
 			printBattleMenu();
 			int select = inputNumber("menu");
-			runBattleMenu(select,monster);
+			runBattleMenu(select, monster);
 		}
 		if (monster.dropPotion()) {
 			player.setPotionCountPlus();
 			System.out.println("몬스터가 포션을 드랍했어요 !");
-			
+
 		}
 
 	}
@@ -135,10 +177,9 @@ public class Game {
 	}
 
 	private void movePlayer() {
-		Random random = new Random();
-		int ranNumber = random.nextInt(5) + 1;
-		player.setLocation(ranNumber);
-		System.out.printf("플레이어는 %d만큼 이동했다...\n", ranNumber);
+
+		player.setLocation(player.getLocation()+1);
+		System.out.printf("플레이어는 %d만큼 이동했다...\n", 1);
 	}
 
 	private void printPlayerStatus() {
@@ -165,14 +206,13 @@ public class Game {
 	}
 
 	private void printPlayerLocation() {
-		for (int i =0; i <END_FLOOR; i++) {
+		for (int i = END_FLOOR - 1; i >= 0; i--) {
 			if (i == player.getLocation()) {
-				System.out.print("⎝ᑒ⎠");
-			}else if (i == END_FLOOR-1) {
-				System.out.print("|GOAL|");
-			}
-			else {
-				System.out.print("_ ");
+				System.out.println("|⎝ᑒ⎠| " + (player.getLocation() + 1) + "층");
+			} else if (i == END_FLOOR - 1) {
+				System.out.println("|GOAL|");
+			} else {
+				System.out.println("|___| ");
 			}
 		}
 		System.out.println();
