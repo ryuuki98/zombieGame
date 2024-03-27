@@ -49,13 +49,11 @@ public class Game {
 		try {
 			Thread.sleep(2000);
 		} catch (Exception e) {
-			// TODO: handle exception
 		}
 		System.out.println("빌지 않겠다 ! ");
 		try {
 			Thread.sleep(2000);
 		} catch (Exception e) {
-			// TODO: handle exception
 		}
 	}
 
