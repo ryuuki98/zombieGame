@@ -2,7 +2,7 @@ package zombie;
 
 import java.util.Random;
 import java.util.Scanner;
-
+//
 
 public class Game {
 	private final int END_FLOOR = 30;
