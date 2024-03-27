@@ -101,13 +101,13 @@ public class Game {
 
 	    switch (ranNum) {
 	        case 0:
-	            monster = new Mob1(); // Instantiate mob1
+	            monster = new Goblin();
 	            break;
 	        case 1:
-	            monster = new Mob2(); // Instantiate mob2
+	            monster = new Magician(); 
 	            break;
 	        case 2:
-	            monster = new Mob3(); // Instantiate mob3
+	            monster = new Mimic(); 
 	            break;
 	        default:
 	            break;
@@ -165,7 +165,7 @@ public class Game {
 	}
 
 	private void attack(Monster monster) {
-		player.attack(monster);
+		player.attack((Damageable) monster);
 		if (!monster.isDead()) {
 			monster.attack(player);
 		}

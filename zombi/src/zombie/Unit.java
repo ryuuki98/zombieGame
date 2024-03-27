@@ -15,10 +15,7 @@ abstract class Unit{
 	}
 	public String getName() {
 		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
+	}	
 	
 	public int getHp() {
 		return hp;
@@ -37,19 +34,13 @@ abstract class Unit{
 	public void setPower(int power) {
 		this.power = power;
 	}
-	public int getmaxHp() {
-		return maxHp;
-	}
-	public void setMaxHp(int maxHp) {
-		this.maxHp = maxHp;
-	}
+
+
 	
 	public boolean isDead() {
 		return isDead;
 	}
-	public void setDead(boolean isDead) {
-		this.isDead = isDead;
-	}
+	
 	
 	
 	

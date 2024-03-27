@@ -1,8 +1,8 @@
 package zombie;
 
-public class Mob1 extends Monster {
+public class Goblin extends Monster implements Damageable{
 
-	public Mob1() {
+	public Goblin() {
 		super("고블린", 100, 3);
 		// TODO Auto-generated constructor stub
 	}

@@ -2,7 +2,7 @@ package zombie;
 
 import java.util.Random;
 
-public class Monster extends Unit implements Damageable {
+public class Monster extends Unit {
 
 	public Monster(String name, int hp, int power) {
 		super(name, hp, power);
